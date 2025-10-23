@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>圈画单词统计效果</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(1.5rem, 4vw, 3rem);
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #e4ecfb 0%, #f9f9ff 100%);
+            color: #1f2a44;
+        }
+
+        .directory-card {
+            width: min(960px, 100%);
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow:
+                0 28px 65px rgba(31, 42, 68, 0.16),
+                0 10px 24px rgba(31, 42, 68, 0.10),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+            padding: clamp(2rem, 4vw, 3rem);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(1.5rem, 3vw, 2.5rem);
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            text-align: center;
+            letter-spacing: 0.12em;
+        }
+
+        header p {
+            margin-top: 0.8rem;
+            text-align: center;
+            font-size: clamp(1rem, 2.2vw, 1.15rem);
+            color: rgba(31, 42, 68, 0.72);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: clamp(0.8rem, 2vw, 1.2rem);
+        }
+
+        .student-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            background: linear-gradient(120deg, #f0f5ff 0%, #f7f9ff 100%);
+            color: #1f2a44;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+            border: 1px solid rgba(118, 145, 255, 0.28);
+        }
+
+        .student-link:hover,
+        .student-link:focus-visible {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(118, 145, 255, 0.25);
+            background: linear-gradient(120deg, #e6ecff 0%, #f1f4ff 100%);
+            color: #182035;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.95rem;
+            color: rgba(31, 42, 68, 0.6);
+        }
+
+        footer span {
+            font-weight: 600;
+            color: rgba(87, 109, 214, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <main class="directory-card" role="main" aria-label="圈画单词统计效果目录">
+        <header>
+            <h1>圈画单词统计效果</h1>
+            <p>选择学生查看 A4 文章页面及其单词标记展示</p>
+        </header>
+        <section class="grid" aria-label="学生列表">
+            <a class="student-link" href="article.html?student=Student%2001">Student 01</a>
+            <a class="student-link" href="article.html?student=Student%2002">Student 02</a>
+            <a class="student-link" href="article.html?student=Student%2003">Student 03</a>
+            <a class="student-link" href="article.html?student=Student%2004">Student 04</a>
+            <a class="student-link" href="article.html?student=Student%2005">Student 05</a>
+            <a class="student-link" href="article.html?student=Student%2006">Student 06</a>
+            <a class="student-link" href="article.html?student=Student%2007">Student 07</a>
+            <a class="student-link" href="article.html?student=Student%2008">Student 08</a>
+            <a class="student-link" href="article.html?student=Student%2009">Student 09</a>
+            <a class="student-link" href="article.html?student=Student%2010">Student 10</a>
+            <a class="student-link" href="article.html?student=Student%2011">Student 11</a>
+            <a class="student-link" href="article.html?student=Student%2012">Student 12</a>
+            <a class="student-link" href="article.html?student=Student%2013">Student 13</a>
+            <a class="student-link" href="article.html?student=Student%2014">Student 14</a>
+            <a class="student-link" href="article.html?student=Student%2015">Student 15</a>
+            <a class="student-link" href="article.html?student=Student%2016">Student 16</a>
+            <a class="student-link" href="article.html?student=Student%2017">Student 17</a>
+            <a class="student-link" href="article.html?student=Student%2018">Student 18</a>
+            <a class="student-link" href="article.html?student=Student%2019">Student 19</a>
+            <a class="student-link" href="article.html?student=Student%2020">Student 20</a>
+            <a class="student-link" href="article.html?student=Student%2021">Student 21</a>
+            <a class="student-link" href="article.html?student=Student%2022">Student 22</a>
+            <a class="student-link" href="article.html?student=Student%2023">Student 23</a>
+            <a class="student-link" href="article.html?student=Student%2024">Student 24</a>
+            <a class="student-link" href="article.html?student=Student%2025">Student 25</a>
+            <a class="student-link" href="article.html?student=Student%2026">Student 26</a>
+            <a class="student-link" href="article.html?student=Student%2027">Student 27</a>
+            <a class="student-link" href="article.html?student=Student%2028">Student 28</a>
+            <a class="student-link" href="article.html?student=Student%2029">Student 29</a>
+            <a class="student-link" href="article.html?student=Student%2030">Student 30</a>
+        </section>
+        <footer>
+            <span>提示：</span>文章页面使用 A4 纸比例展示高亮示例。
+        </footer>
+    </main>
+</body>
+</html>

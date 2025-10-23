@@ -1,0 +1,125 @@
+:root {
+    --paper-width: min(82vw, 780px);
+    color-scheme: light;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: linear-gradient(180deg, #e6edf5 0%, #f4f6fb 40%, #f1f1f1 100%);
+    font-family: "Times New Roman", Georgia, "Noto Serif", serif;
+    color: #2b2b2b;
+    padding: 0 clamp(1rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem);
+}
+
+.nav-back {
+    position: fixed;
+    top: clamp(1rem, 3vw, 1.75rem);
+    left: clamp(1rem, 3vw, 2.25rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #1f2a44;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(88, 110, 205, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-back:hover,
+.nav-back:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(88, 110, 205, 0.18);
+}
+
+.page-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.paper {
+    width: var(--paper-width);
+    aspect-ratio: 210 / 297;
+    background: #fff;
+    padding: clamp(2.5rem, 4vw, 3.5rem);
+    box-shadow:
+        0 20px 50px rgba(28, 55, 90, 0.2),
+        0 2px 8px rgba(28, 55, 90, 0.15);
+    border-radius: 6px;
+    overflow: auto;
+}
+
+.paper::-webkit-scrollbar {
+    width: 10px;
+}
+
+.paper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.paper::-webkit-scrollbar-thumb {
+    background: rgba(44, 62, 80, 0.35);
+    border-radius: 999px;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.55;
+    font-size: clamp(1rem, 1.03vw, 1.08rem);
+    text-align: justify;
+}
+
+header h2 {
+    font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+    font-weight: 600;
+    text-align: center;
+    color: #415a77;
+    letter-spacing: 0.04em;
+}
+
+header h3 {
+    font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+    font-weight: 600;
+    text-align: center;
+    color: #2b2b2b;
+    letter-spacing: 0.03em;
+    margin-top: 0.5rem;
+}
+
+p {
+    text-indent: 2em;
+}
+
+@media (max-width: 640px) {
+    :root {
+        --paper-width: 92vw;
+    }
+
+    body {
+        padding: 1.5rem 0.6rem;
+        background: #f1f4f9;
+    }
+
+    .paper {
+        border-radius: 10px;
+        box-shadow:
+            0 15px 35px rgba(28, 55, 90, 0.18),
+            0 1px 4px rgba(28, 55, 90, 0.25);
+    }
+}

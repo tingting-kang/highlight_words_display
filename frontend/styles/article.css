@@ -1,5 +1,10 @@
 :root {
     --paper-width: min(82vw, 780px);
+    --highlight-circle: rgba(220, 66, 66, 0.85);
+    --highlight-single: rgba(49, 102, 210, 0.9);
+    --highlight-double: rgba(33, 166, 104, 0.9);
+    --highlight-wavy: rgba(214, 142, 52, 0.95);
+    --paper-height: calc(var(--paper-width) * 297 / 210);
     color-scheme: light;
 }
 
@@ -53,6 +58,7 @@ body {
 
 .paper {
     width: var(--paper-width);
+    height: var(--paper-height);
     aspect-ratio: 210 / 297;
     background: #fff;
     padding: clamp(2.5rem, 4vw, 3.5rem);
@@ -61,6 +67,9 @@ body {
         0 2px 8px rgba(28, 55, 90, 0.15);
     border-radius: 6px;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 4vh, 2.6rem);
 }
 
 .paper::-webkit-scrollbar {
@@ -80,9 +89,204 @@ article {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    line-height: 1.55;
-    font-size: clamp(1rem, 1.03vw, 1.08rem);
+    line-height: 1.6;
+    font-size: clamp(1.08rem, 1.12vw, 1.18rem);
     text-align: justify;
+    flex: 1 1 auto;
+}
+
+.page-wrap.legend-layout {
+    justify-content: center;
+}
+
+.page-wrap.class-layout {
+    justify-content: center;
+    gap: clamp(1.8rem, 4vw, 2.6rem);
+    align-items: stretch;
+}
+
+.legend-panel {
+    align-self: flex-end;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 12px;
+    border: 1px solid rgba(160, 170, 200, 0.55);
+    box-shadow:
+        0 18px 38px rgba(31, 42, 68, 0.12),
+        0 6px 16px rgba(31, 42, 68, 0.16);
+    padding: clamp(1rem, 2.4vw, 1.4rem) clamp(1.1rem, 2.4vw, 1.6rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.9rem, 1.8vw, 1.2rem);
+    width: clamp(210px, 24%, 240px);
+}
+
+.paper article {
+    margin-right: 0;
+}
+
+.table-panel {
+    width: min(var(--paper-width), clamp(408px, 43vw, 504px));
+    height: var(--paper-height);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 14px;
+    border: 2px solid rgba(137, 146, 182, 0.75);
+    box-shadow:
+        0 20px 40px rgba(31, 42, 68, 0.18),
+        0 6px 18px rgba(31, 42, 68, 0.16);
+    padding: clamp(1.2rem, 2.6vw, 1.6rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.4rem);
+}
+
+.table-panel h4 {
+    text-align: center;
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    letter-spacing: 0.05em;
+    color: #1f2a44;
+    font-weight: 600;
+}
+
+.table-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: calc(100% - 2rem);
+}
+
+.table-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background: rgba(47, 61, 91, 0.35);
+    border-radius: 999px;
+}
+
+.table-panel table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    color: #2b3145;
+}
+
+.table-panel thead {
+    position: sticky;
+    top: 0;
+    background: rgba(240, 244, 255, 0.95);
+    backdrop-filter: blur(4px);
+    z-index: 1;
+}
+
+.table-panel th,
+.table-panel td {
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid rgba(200, 205, 223, 0.65);
+    text-align: center;
+}
+
+.table-panel th:nth-child(2),
+.table-panel td:nth-child(2) {
+    text-align: left;
+}
+
+.table-panel tbody tr:nth-child(even) {
+    background: rgba(245, 248, 255, 0.9);
+}
+
+.table-panel tbody tr:hover {
+    background: rgba(210, 223, 255, 0.55);
+}
+.legend-panel h4 {
+    font-size: clamp(0.92rem, 1.05vw, 1rem);
+    color: #1f2a44;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.04em;
+}
+
+.legend-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.legend-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.legend-item span {
+    font-size: 0.86rem;
+    color: #344055;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.legend-circle .legend-swatch {
+    background: var(--highlight-circle);
+}
+
+.legend-single .legend-swatch {
+    background: var(--highlight-single);
+}
+
+.legend-double .legend-swatch {
+    background: var(--highlight-double);
+}
+
+.legend-wavy .legend-swatch {
+    background: var(--highlight-wavy);
+}
+
+.highlight-circle {
+    background: color-mix(in srgb, var(--highlight-circle) 32%, transparent);
+    padding: 0 0.18em;
+    border-radius: 0.35em;
+    box-shadow:
+        0 0 10px color-mix(in srgb, var(--highlight-circle) 28%, transparent),
+        inset 0 -0.2em 0 color-mix(in srgb, var(--highlight-circle) 24%, transparent);
+}
+
+.highlight-single {
+    background: color-mix(in srgb, var(--highlight-single) 22%, transparent);
+    padding: 0 0.16em;
+    border-radius: 0.3em;
+    box-shadow:
+        0 0 10px color-mix(in srgb, var(--highlight-single) 26%, transparent),
+        inset 0 -0.18em 0 color-mix(in srgb, var(--highlight-single) 32%, transparent);
+}
+
+.highlight-double {
+    background: color-mix(in srgb, var(--highlight-double) 18%, transparent);
+    padding: 0 0.16em;
+    border-radius: 0.3em;
+    box-shadow:
+        0 0 10px color-mix(in srgb, var(--highlight-double) 24%, transparent),
+        inset 0 -0.18em 0 color-mix(in srgb, var(--highlight-double) 28%, transparent);
+}
+
+.highlight-wavy {
+    background: color-mix(in srgb, var(--highlight-wavy) 20%, transparent);
+    padding: 0 0.16em;
+    border-radius: 0.3em;
+    box-shadow:
+        0 0 10px color-mix(in srgb, var(--highlight-wavy) 26%, transparent),
+        inset 0 -0.18em 0 color-mix(in srgb, var(--highlight-wavy) 30%, transparent);
 }
 
 header h2 {
@@ -109,6 +313,7 @@ p {
 @media (max-width: 640px) {
     :root {
         --paper-width: 92vw;
+        --paper-height: calc(var(--paper-width) * 297 / 210);
     }
 
     body {
@@ -121,5 +326,16 @@ p {
         box-shadow:
             0 15px 35px rgba(28, 55, 90, 0.18),
             0 1px 4px rgba(28, 55, 90, 0.25);
+    }
+
+    .page-wrap.class-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .table-panel {
+        width: min(100%, 92vw);
+        height: auto;
+        max-height: 60vh;
     }
 }

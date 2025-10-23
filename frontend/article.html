@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>圈画单词统计效果</title>
+    <title>Word Highlight Showcase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/article.css">
 </head>
 <body>
-    <a class="nav-back" href="index.html" aria-label="返回目录">
-        ← 返回目录
+    <a class="nav-back" href="index.html" aria-label="Back to directory">
+        ← Back to Directory
     </a>
-    <div class="page-wrap">
-        <div class="paper" role="article" aria-label="英语文章高亮展示页">
+    <div class="page-wrap legend-layout">
+        <div class="paper" role="article" aria-label="Student highlight showcase">
             <article>
                 <header>
                     <h3>Learning in the Age of Curiosity</h3>
@@ -44,7 +44,65 @@
                     intentions; the answers they deliver are only as bold as the questions we pose.
                 </p>
             </article>
+            <aside class="legend-panel" aria-label="Highlight legend">
+                <h4>Highlight Legend</h4>
+                <div class="legend-list">
+                    <div class="legend-item legend-circle">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>Circle Mark</span>
+                    </div>
+                    <div class="legend-item legend-single">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>Underline</span>
+                    </div>
+                    <div class="legend-item legend-double">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>Double Underline</span>
+                    </div>
+                    <div class="legend-item legend-wavy">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>Wavy Underline</span>
+                    </div>
+                </div>
+            </aside>
         </div>
     </div>
+    <script>
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            const student = (params.get('student') || '').trim();
+
+            if (student) {
+                document.title = `${student} - Word Highlight Showcase`;
+            }
+
+            if (/^student\s*0*1$/i.test(student)) {
+                const firstParagraph = document.querySelector('.paper article p');
+                if (!firstParagraph) {
+                    return;
+                }
+
+                let wordIndex = 0;
+                firstParagraph.innerHTML = firstParagraph.innerHTML.replace(
+                    /(\b[A-Za-z]+(?:'[A-Za-z]+)?\b)/g,
+                    (match) => {
+                        wordIndex += 1;
+                        switch (wordIndex) {
+                            case 1:
+                                return `<span class="highlight-circle">${match}</span>`;
+                            case 2:
+                                return `<span class="highlight-single">${match}</span>`;
+                            case 3:
+                                return `<span class="highlight-double">${match}</span>`;
+                            case 4:
+                                return `<span class="highlight-wavy">${match}</span>`;
+                            default:
+                                return match;
+                        }
+                    }
+                );
+            }
+        })();
+    </script>
 </body>
 </html>

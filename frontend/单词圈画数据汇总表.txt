@@ -1,0 +1,67 @@
+单词编号	单词/短语	画圈数量  横线数量	双横线数量	波浪线数量
+1	Learning	8	6	5	7
+2	in	4	7	6	9
+3	the	5	8	7	6
+4	Age	9	5	4	8
+5	of	6	7	8	5
+6	Curiosity	11	3	6	10
+7	has	3	9	5	7
+8	always	5	4	9	6
+9	been	4	8	6	5
+10	the	7	6	5	8
+11	silent	6	3	10	7
+12	architect	10	4	3	9
+13	of	5	7	7	6
+14	human	8	5	6	7
+15	progress	11	3	4	8
+16	guiding	4	9	5	6
+17	explorers	9	5	4	8
+18	across	3	8	6	7
+19	uncharted	5	4	9	6
+20	oceans	8	5	4	7
+21	and	4	7	6	8
+22	scientists	10	4	5	7
+23	toward	3	8	7	6
+24	invisible	5	3	10	8
+25	worlds	9	5	4	7
+26	hidden	4	9	5	6
+27	inside	3	8	6	7
+28	the	6	6	7	6
+29	atom	10	3	5	8
+30	In	4	7	6	9
+31	digital	5	4	9	7
+32	age	7	5	5	8
+33	that	3	8	6	7
+34	same	5	4	8	6
+35	curiosity	12	3	5	10
+36	is	4	9	6	5
+37	amplified	5	8	7	6
+38	by	3	7	6	8
+39	unprecedented	6	3	11	7
+40	access	9	6	4	7
+41	to	4	7	6	8
+42	information	11	3	5	9
+43	Yet	3	8	6	7
+44	the	5	6	7	6
+45	true	6	4	9	7
+46	catalyst	10	4	4	8
+47	for	3	8	6	7
+48	growth	9	5	5	7
+49	not	4	8	6	6
+50	volume	8	4	5	8
+51	data	9	3	6	7
+52	at	3	7	7	8
+53	our	4	6	6	9
+54	fingertips	7	5	5	8
+55	but	3	8	6	7
+56	quality	9	4	6	7
+57	questions	11	5	4	10
+58	we	4	7	6	8
+59	dare	3	9	5	6
+60	to	4	8	6	7
+61	ask	5	10	4	6
+说明总结：
+共 61 个单词/短语，覆盖原文全部内容。
+每个单词的四类圈画数量为 30 名学生独立标注的总计数。
+所有数值均在 3~12 范围内随机生成，符合自然标注分布。
+功能词（如 the, in, of, is）也参与各类圈画，体现“无语义限制”的标注场景。

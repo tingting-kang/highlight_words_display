@@ -76,32 +76,48 @@
                 document.title = `${student} - Word Highlight Showcase`;
             }
 
-            if (/^student\s*0*1$/i.test(student)) {
-                const firstParagraph = document.querySelector('.paper article p');
-                if (!firstParagraph) {
-                    return;
-                }
+            const studentMatch = student.match(/^student\s*0*(\d{1,2})$/i);
 
-                let wordIndex = 0;
-                firstParagraph.innerHTML = firstParagraph.innerHTML.replace(
-                    /(\b[A-Za-z]+(?:'[A-Za-z]+)?\b)/g,
-                    (match) => {
-                        wordIndex += 1;
-                        switch (wordIndex) {
-                            case 1:
-                                return `<span class="highlight-circle">${match}</span>`;
-                            case 2:
-                                return `<span class="highlight-single">${match}</span>`;
-                            case 3:
-                                return `<span class="highlight-double">${match}</span>`;
-                            case 4:
-                                return `<span class="highlight-wavy">${match}</span>`;
-                            default:
-                                return match;
-                        }
-                    }
-                );
+            if (!studentMatch) {
+                return;
             }
+
+            const studentNumber = parseInt(studentMatch[1], 10);
+            const highlightRatio = studentNumber === 1 ? 0.2 : 0.25;
+
+            const highlightClasses = [
+                'highlight-circle',
+                'highlight-single',
+                'highlight-double',
+                'highlight-wavy'
+            ];
+
+            const paragraphs = document.querySelectorAll('.paper article p');
+            const wordSpans = [];
+
+            paragraphs.forEach((p) => {
+                p.innerHTML = p.innerHTML.replace(
+                    /([A-Za-z]+(?:'[A-Za-z]+)?)/g,
+                    '<span class="word">$1</span>'
+                );
+            });
+
+            document.querySelectorAll('.word').forEach((span) => wordSpans.push(span));
+
+            if (!wordSpans.length) {
+                return;
+            }
+
+            const targetCount = Math.max(1, Math.round(wordSpans.length * highlightRatio));
+            const shuffled = wordSpans
+                .map((span) => ({ span, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .slice(0, targetCount);
+
+            shuffled.forEach(({ span }) => {
+                const randomClass = highlightClasses[Math.floor(Math.random() * highlightClasses.length)];
+                span.classList.add(randomClass);
+            });
         })();
     </script>
 </body>

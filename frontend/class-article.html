@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="styles/article.css">
 </head>
 <body>
-    <a class="nav-back" href="index.html" aria-label="Back to directory">
-        &larr; Back to Directory
-    </a>
     <div class="page-wrap class-layout">
         <div class="paper-wrapper">
             <div class="paper" role="article" aria-label="Class highlight showcase">
@@ -32,281 +29,167 @@
                     </p>
                     <p>
                         This story shows that persistence is the key to overcoming challenges. No matter how difficult the journey is, those who keep going will eventually reach their goals.
-                    </p>
-                </article>
-            </div>
-            <nav class="class-action-bar" aria-label="Highlight color selector">
-                <a href="class-article.html?color=circle" class="color-switcher color-circle">Circle</a>
+                </p>
+            </article>
+            <aside class="legend-panel legend-inset" aria-label="Highlight legend">
+                <h4>颜色-数量图例</h4>
+                <div class="legend-list">
+                    <div class="legend-item legend-range-low">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>0% - 25%</span>
+                    </div>
+                    <div class="legend-item legend-range-mid">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>26% - 50%</span>
+                    </div>
+                    <div class="legend-item legend-range-high">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>51% - 75%</span>
+                    </div>
+                    <div class="legend-item legend-range-max">
+                        <div class="legend-swatch" aria-hidden="true"></div>
+                        <span>76% - 100%</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <nav class="class-action-bar" aria-label="Highlight color selector">
+            <a href="class-article.html?color=circle" class="color-switcher color-circle">Circle</a>
                 <a href="class-article.html?color=single" class="color-switcher color-single">Underline</a>
                 <a href="class-article.html?color=double" class="color-switcher color-double">Double</a>
                 <a href="class-article.html?color=wavy" class="color-switcher color-wavy">Wavy</a>
             </nav>
         </div>
     </div>
+        <script src="mark_word_data.js"></script>
     <script>
         (function () {
-    const params = new URLSearchParams(window.location.search);
-    const color = (params.get('color') || 'circle').toLowerCase();
+            const wordData = Array.isArray(window.markWordData) ? window.markWordData : [];
+            const maxScore = 20;
+            const viewToType = {
+                circle: 'circle',
+                single: 'single',
+                double: 'double',
+                wavy: 'wavy'
+            };
+            const tierClasses = {
+                low: 'highlight-tier-low',
+                mid: 'highlight-tier-mid',
+                high: 'highlight-tier-high',
+                max: 'highlight-tier-max'
+            };
+            const getTierClass = (ratio) => {
+                if (ratio <= 0.25) return tierClasses.low;
+                if (ratio <= 0.5) return tierClasses.mid;
+                if (ratio <= 0.75) return tierClasses.high;
+                return tierClasses.max;
+            };
+            const labels = {
+                circle: 'Circle marks',
+                single: 'Underline marks',
+                double: 'Double-underline marks',
+                wavy: 'Wavy-underline marks'
+            };
+            const scoreLabels = {
+                circle: 'Circle count',
+                single: 'Underline count',
+                double: 'Double-underline count',
+                wavy: 'Wavy-underline count'
+            };
 
-    const colorClasses = {
-        circle: 'highlight-circle',
-        single: 'highlight-single',
-        double: 'highlight-double',
-        wavy: 'highlight-wavy'
-    };
+            const params = new URLSearchParams(window.location.search);
+            const activeView = (params.get('color') || 'circle').toLowerCase();
+            const markType = viewToType[activeView] || 'circle';
 
-    const gradients = {
-        circle: { key: 'circle', start: [255, 190, 218], end: [80, 0, 28], label: 'Circle Scale:', alphaBase: 0.75, alphaScale: 0.25 },
-        single: { key: 'single', start: [220, 232, 255], end: [0, 20, 125], label: 'Underline Scale:', alphaBase: 0.55, alphaScale: 0.45 },
-        double: { key: 'double', start: [225, 250, 238], end: [0, 60, 30], label: 'Double Scale:', alphaBase: 0.55, alphaScale: 0.45 },
-        wavy: { key: 'wavy', start: [255, 225, 195], end: [190, 80, 0], label: 'Wavy Scale:', alphaBase: 0.55, alphaScale: 0.45 }
-    };
+            document.title = `${activeView.charAt(0).toUpperCase() + activeView.slice(1)} Highlight - Class Summary`;
 
-    const stats = {
-        'high': { circle: 5, single: 3, double: 7, wavy: 5 },
-        'school': { circle: 1, single: 6, double: 4, wavy: 6 },
-        'english': { circle: 9, single: 2, double: 5, wavy: 7 },
-        'reading': { circle: 0, single: 5, double: 6, wavy: 6 },
-        'comprehension': { circle: 12, single: 4, double: 3, wavy: 5 },
-        'the': { circle: 1, single: 6, double: 6, wavy: 6 },
-        'power': { circle: 12, single: 3, double: 2, wavy: 3 },
-        'of': { circle: 0, single: 6, double: 7, wavy: 4 },
-        'persistence': { circle: 12, single: 2, double: 3, wavy: 3 },
-        'in': { circle: 12, single: 6, double: 6, wavy: 6 },
-        'scientific': { circle: 5, single: 4, double: 9, wavy: 2 },
-        'exploration': { circle: 12, single: 3, double: 3, wavy: 4 },
-        'history': { circle: 12, single: 3, double: 5, wavy: 3 },
-        'science': { circle: 12, single: 2, double: 4, wavy: 4 },
-        'many': { circle: 0, single: 6, double: 5, wavy: 7 },
-        'breakthroughs': { circle: 12, single: 3, double: 3, wavy: 2 },
-        'have': { circle: 1, single: 7, double: 6, wavy: 3 },
-        'come': { circle: 0, single: 10, double: 4, wavy: 3 },
-        'not': { circle: 5, single: 4, double: 5, wavy: 6 },
-        'from': { circle: 1, single: 6, double: 5, wavy: 5 },
-        'sudden': { circle: 1, single: 3, double: 9, wavy: 4 },
-        'inspirations': { circle: 12, single: 2, double: 4, wavy: 3 },
-        'but': { circle: 5, single: 5, double: 5, wavy: 5 },
-        'longterm': { circle: 5, single: 3, double: 10, wavy: 2 },
-        'marie': { circle: 5, single: 4, double: 4, wavy: 5 },
-        'curie': { circle: 12, single: 3, double: 5, wavy: 1 },
-        'first': { circle: 5, single: 4, double: 8, wavy: 3 },
-        'woman': { circle: 12, single: 3, double: 4, wavy: 4 },
-        'to': { circle: 5, single: 6, double: 5, wavy: 4 },
-        'win': { circle: 1, single: 11, double: 3, wavy: 2 },
-        'a': { circle: 5, single: 4, double: 5, wavy: 6 },
-        'nobel': { circle: 5, single: 4, double: 4, wavy: 4 },
-        'prize': { circle: 12, single: 3, double: 5, wavy: 2 },
-        'and': { circle: 0, single: 5, double: 6, wavy: 7 },
-        'extremely': { circle: 1, single: 2, double: 10, wavy: 4 },
-        'tough': { circle: 5, single: 3, double: 9, wavy: 3 },
-        'stir': { circle: 0, single: 10, double: 4, wavy: 3 },
-        'mixture': { circle: 12, single: 2, double: 3, wavy: 4 },
-        'manually': { circle: 1, single: 3, double: 8, wavy: 5 },
-        'for': { circle: 12, single: 7, double: 5, wavy: 7 },
-        'hours': { circle: 12, single: 4, double: 4, wavy: 3 },
-        'each': { circle: 12, single: 6, double: 5, wavy: 7 },
-        'day': { circle: 12, single: 3, double: 6, wavy: 3 },
-        'harmful': { circle: 5, single: 2, double: 9, wavy: 4 },
-        'radiation': { circle: 12, single: 3, double: 4, wavy: 3 },
-        'began': { circle: 12, single: 9, double: 5, wavy: 3 },
-        'affect': { circle: 1, single: 10, double: 3, wavy: 3 },
-        'their': { circle: 0, single: 6, double: 5, wavy: 7 },
-        'health': { circle: 12, single: 2, double: 4, wavy: 3 },
-        'pierres': { circle: 12, single: 6, double: 6, wavy: 4 },
-        'hands': { circle: 12, single: 3, double: 5, wavy: 4 },
-        'became': { circle: 1, single: 8, double: 4, wavy: 4 },
-        'sore': { circle: 12, single: 5, double: 9, wavy: 4 },
-        'often': { circle: 1, single: 3, double: 8, wavy: 5 },
-        'felt': { circle: 0, single: 9, double: 5, wavy: 3 },
-        'exhausted': { circle: 5, single: 2, double: 10, wavy: 3 },
-        'people': { circle: 12, single: 3, double: 4, wavy: 3 },
-        'laughed': { circle: 1, single: 8, double: 5, wavy: 4 },
-        'at': { circle: 0, single: 5, double: 6, wavy: 6 },
-        'pointless': { circle: 5, single: 3, double: 9, wavy: 3 },
-        'effort': { circle: 12, single: 4, double: 4, wavy: 4 },
-        'saying': { circle: 0, single: 7, double: 5, wavy: 5 },
-        'they': { circle: 5, single: 4, double: 5, wavy: 4 },
-        'would': { circle: 0, single: 5, double: 5, wavy: 7 },
-        'never': { circle: 5, single: 3, double: 8, wavy: 4 },
-        'find': { circle: 0, single: 9, double: 4, wavy: 4 },
-        'anything': { circle: 1, single: 6, double: 6, wavy: 6 },
-        'new': { circle: 5, single: 4, double: 10, wavy: 1 },
-        'curies': { circle: 12, single: 2, double: 4, wavy: 3 },
-        'refused': { circle: 1, single: 10, double: 3, wavy: 3 },
-        'give': { circle: 0, single: 9, double: 4, wavy: 4 },
-        'up': { circle: 5, single: 4, double: 5, wavy: 5 },
-        'finally': { circle: 1, single: 3, double: 10, wavy: 3 },
-        'succeeded': { circle: 1, single: 11, double: 3, wavy: 2 },
-        'isolating': { circle: 0, single: 10, double: 4, wavy: 3 },
-        'radium': { circle: 12, single: 2, double: 3, wavy: 3 },
-        'element': { circle: 12, single: 2, double: 4, wavy: 3 },
-        'with': { circle: 0, single: 6, double: 6, wavy: 7 },
-        'strong': { circle: 0, single: 5, double: 8, wavy: 5 },
-        'radioactivity': { circle: 12, single: 3, double: 4, wavy: 3 },
-        'discovery': { circle: 12, single: 2, double: 3, wavy: 3 },
-        'revolutionized': { circle: 0, single: 11, double: 4, wavy: 2 },
-        'medicine': { circle: 12, single: 3, double: 4, wavy: 2 },
-        'physics': { circle: 12, single: 2, double: 5, wavy: 3 },
-        'leading': { circle: 1, single: 9, double: 4, wavy: 4 },
-        'treatments': { circle: 12, single: 3, double: 4, wavy: 4 },
-        'cancer': { circle: 12, single: 2, double: 3, wavy: 5 },
-        'later': { circle: 12, single: 5, double: 6, wavy: 6 },
-        'when': { circle: 1, single: 6, double: 4, wavy: 7 },
-        'asked': { circle: 12, single: 9, double: 5, wavy: 4 },
-        'about': { circle: 5, single: 4, double: 6, wavy: 5 },
-        'this': { circle: 1, single: 5, double: 5, wavy: 6 },
-        'story': { circle: 12, single: 3, double: 4, wavy: 4 },
-        'shows': { circle: 12, single: 10, double: 3, wavy: 5 },
-        'that': { circle: 5, single: 4, double: 6, wavy: 5 },
-        'is': { circle: 0, single: 5, double: 4, wavy: 7 },
-        'key': { circle: 0, single: 4, double: 11, wavy: 3 },
-        'overcoming': { circle: 0, single: 10, double: 4, wavy: 3 },
-        'challenges': { circle: 12, single: 2, double: 3, wavy: 4 },
-        'no': { circle: 1, single: 5, double: 6, wavy: 7 },
-        'matter': { circle: 0, single: 6, double: 5, wavy: 5 },
-        'how': { circle: 5, single: 4, double: 4, wavy: 6 },
-        'difficult': { circle: 0, single: 3, double: 10, wavy: 4 },
-        'journey': { circle: 12, single: 2, double: 5, wavy: 3 },
-        'those': { circle: 5, single: 4, double: 6, wavy: 4 },
-        'who': { circle: 0, single: 6, double: 5, wavy: 6 },
-        'keep': { circle: 1, single: 9, double: 4, wavy: 3 },
-        'going': { circle: 0, single: 10, double: 3, wavy: 5 },
-        'will': { circle: 5, single: 4, double: 6, wavy: 5 },
-        'eventually': { circle: 0, single: 3, double: 10, wavy: 4 },
-        'reach': { circle: 1, single: 11, double: 4, wavy: 2 },
-        'goals': { circle: 12, single: 2, double: 3, wavy: 5 }
-    };
+            document.querySelectorAll('.color-switcher').forEach((link) => {
+                const url = new URL(link.href, window.location.origin);
+                const linkView = (url.searchParams.get('color') || 'circle').toLowerCase();
+                if (linkView === activeView) {
+                    link.setAttribute('aria-current', 'page');
+                    link.classList.add('is-active');
+                } else {
+                    link.removeAttribute('aria-current');
+                    link.classList.remove('is-active');
+                }
+            });
 
-    const activeClass = colorClasses[color] ? color : 'circle';
-    const highlightClass = colorClasses[activeClass];
+            const paragraphs = document.querySelectorAll('.paper article p');
+            const wordSpans = [];
 
-    document.title = `${activeClass.charAt(0).toUpperCase() + activeClass.slice(1)} Highlight - Class Summary`;
+            paragraphs.forEach((p) => {
+                p.innerHTML = p.innerHTML.replace(/([A-Za-z]+(?:[-'][A-Za-z]+)*)/g, '<span class="word">$1</span>');
+            });
 
-    document.querySelectorAll('.color-switcher').forEach((link) => {
-        const url = new URL(link.href, window.location.origin);
-        const linkColor = (url.searchParams.get('color') || 'circle').toLowerCase();
-        if (linkColor === activeClass) {
-            link.setAttribute('aria-current', 'page');
-            link.classList.add('is-active');
-        } else {
-            link.removeAttribute('aria-current');
-            link.classList.remove('is-active');
-        }
-    });
+            document.querySelectorAll('.word').forEach((span) => wordSpans.push(span));
 
-    const paragraphs = document.querySelectorAll('.paper article p');
-    const wordSpans = [];
-
-    paragraphs.forEach((p) => {
-        p.innerHTML = p.innerHTML.replace(
-            /([A-Za-z]+(?:'[A-Za-z]+)?)/g,
-            '<span class="word">$1</span>'
-        );
-    });
-
-    document.querySelectorAll('.word').forEach((span) => wordSpans.push(span));
-
-    if (!wordSpans.length) {
-        return;
-    }
-
-    const highlightClassesList = Object.values(colorClasses);
-    wordSpans.forEach((span) => {
-        highlightClassesList.forEach((cls) => span.classList.remove(cls));
-        span.style.backgroundColor = '';
-        span.style.boxShadow = '';
-    });
-
-    const gradientConfig = gradients[activeClass];
-    if (gradientConfig) {
-        applyGradient(gradientConfig);
-    } else {
-        applyRandom();
-    }
-
-    function applyGradient({ key, start, end, label, alphaBase, alphaScale }) {
-        const values = Object.values(stats)
-            .map((entry) => entry[key])
-            .filter((value) => typeof value === 'number' && !Number.isNaN(value));
-
-        if (!values.length) {
-            applyRandom();
-            return;
-        }
-
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-
-        wordSpans.forEach((span) => {
-            const word = span.textContent.toLowerCase();
-            const entry = stats[word];
-            if (!entry || typeof entry[key] !== 'number') {
+            if (!wordSpans.length || !wordData.length) {
                 return;
             }
 
-            const count = entry[key];
-            const ratio = Math.pow((count - min) / (max - min || 1), 1.4);
-            const [r, g, b] = start.map((value, idx) =>
-                Math.round(value + ratio * (end[idx] - value))
-            );
-            const alpha = (alphaBase ?? 0.28) + ratio * (alphaScale ?? 0.72);
+            const allClasses = ['highlight-tier', 'highlight-tier-low', 'highlight-tier-mid', 'highlight-tier-high', 'highlight-tier-max'];
+            const normalize = (text) => text.toLowerCase().replace(/[^a-z']/g, '');
 
-            span.classList.add(highlightClass);
-            span.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(2)})`;
-            span.style.boxShadow = `0 0 22px rgba(${r}, ${g}, ${b}, ${(0.75 + ratio * 0.25).toFixed(2)})`;
-        });
+            const queuesByMode = {
+                circle: Object.create(null),
+                single: Object.create(null),
+                double: Object.create(null),
+                wavy: Object.create(null)
+            };
 
-        const headerElement = document.querySelector('.paper article header');
-        if (headerElement) {
-            const existingPreview = headerElement.querySelector('.highlight-preview');
-            if (existingPreview) {
-                existingPreview.remove();
-            }
-
-            const preview = document.createElement('div');
-            preview.className = 'highlight-preview';
-
-            const labelSpan = document.createElement('span');
-            labelSpan.textContent = label;
-            preview.appendChild(labelSpan);
-
-            const uniqueCounts = Array.from(new Set(values)).sort((a, b) => a - b);
-            const sampleIndices = [0, Math.floor(uniqueCounts.length * 0.25), Math.floor(uniqueCounts.length * 0.5), Math.floor(uniqueCounts.length * 0.75), uniqueCounts.length - 1];
-            const samples = Array.from(new Set(sampleIndices.map((idx) => uniqueCounts[Math.min(idx, uniqueCounts.length - 1)])));
-
-            samples.forEach((sample) => {
-                const ratio = Math.pow((sample - min) / (max - min || 1), 1.4);
-                const [r, g, b] = start.map((value, idx) =>
-                    Math.round(value + ratio * (end[idx] - value))
-                );
-                const alpha = (alphaBase ?? 0.28) + ratio * (alphaScale ?? 0.72);
-
-                const swatch = document.createElement('span');
-                swatch.className = 'highlight-preview-swatch';
-                swatch.textContent = sample;
-                swatch.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(2)})`;
-                swatch.style.boxShadow = `0 0 12px rgba(${r}, ${g}, ${b}, ${(0.7 + ratio * 0.3).toFixed(2)})`;
-                preview.appendChild(swatch);
+            wordData.forEach((entry) => {
+                const key = normalize(entry.word || '');
+                if (!key) {
+                    return;
+                }
+                Object.keys(queuesByMode).forEach((mode) => {
+                    const value = Number(entry[mode]);
+                    if (!Number.isFinite(value)) {
+                        return;
+                    }
+                    if (!queuesByMode[mode][key]) {
+                        queuesByMode[mode][key] = [];
+                    }
+                    queuesByMode[mode][key].push(value);
+                });
             });
 
-            headerElement.appendChild(preview);
-        }
-    }
+            const queues = queuesByMode[markType] || {};
+            let scoreTotal = 0;
+            let processedWords = 0;
 
-    function applyRandom() {
-        const targetCount = Math.max(1, Math.round(wordSpans.length * 0.3));
-        const shuffled = wordSpans
-            .map((span) => ({ span, sort: Math.random() }))
-            .sort((a, b) => a.sort - b.sort)
-            .slice(0, targetCount);
+            wordSpans.forEach((span) => {
+                allClasses.forEach((cls) => span.classList.remove(cls));
+                const key = normalize(span.textContent);
+                const queue = queues[key];
+                if (!queue || !queue.length) {
+                    return;
+                }
+                const score = queue.shift();
+                const ratio = Math.max(0, Math.min(1, score / maxScore));
+                const tierClass = getTierClass(ratio);
+                span.classList.add('highlight-tier', tierClass);
+                span.dataset[`${markType}Score`] = String(score);
+                span.setAttribute('title', `${scoreLabels[markType] || 'Count'}: ${score}`);
+                scoreTotal += score;
+                processedWords += 1;
+            });
 
-        shuffled.forEach(({ span }) => {
-            span.classList.add(highlightClass);
-        });
-    }
-})();
-
-</script>
+            const header = document.querySelector('.paper article header');
+            if (header) {
+                const existingSummary = header.querySelector('.highlight-summary');
+                if (existingSummary) {
+                    existingSummary.remove();
+                }
+                const summary = document.createElement('div');
+                summary.className = 'highlight-summary';
+                const maxTotal = Math.max(1, processedWords * maxScore);
+                const percent = (scoreTotal / maxTotal) * 100;
+                summary.textContent = `${labels[markType] || 'Highlights'}: ${scoreTotal} / ${maxTotal} (${percent.toFixed(1)}%)`;
+                header.appendChild(summary);
+            }
+        })();
+    </script>
 </body>
 </html>
-

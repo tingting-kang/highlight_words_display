@@ -1,9 +1,9 @@
 :root {
     --paper-width: min(82vw, 780px);
-    --highlight-circle: rgba(220, 66, 66, 0.85);
-    --highlight-single: rgba(49, 102, 210, 0.9);
-    --highlight-double: rgba(33, 166, 104, 0.9);
-    --highlight-wavy: rgba(214, 142, 52, 0.95);
+    --highlight-tier-low: #81c784;
+    --highlight-tier-mid: #ffca28;
+    --highlight-tier-high: #ff6f61;
+    --highlight-tier-max: #8e24aa;
     --paper-height: calc(var(--paper-width) * 297 / 210);
     color-scheme: light;
 }
@@ -153,19 +153,19 @@ article {
 }
 
 .color-switcher.color-circle {
-    border-color: color-mix(in srgb, var(--highlight-circle) 55%, white);
+    border-color: color-mix(in srgb, var(--highlight-tier-low) 55%, white);
 }
 
 .color-switcher.color-single {
-    border-color: color-mix(in srgb, var(--highlight-single) 55%, white);
+    border-color: color-mix(in srgb, var(--highlight-tier-mid) 55%, white);
 }
 
 .color-switcher.color-double {
-    border-color: color-mix(in srgb, var(--highlight-double) 55%, white);
+    border-color: color-mix(in srgb, var(--highlight-tier-high) 55%, white);
 }
 
 .color-switcher.color-wavy {
-    border-color: color-mix(in srgb, var(--highlight-wavy) 55%, white);
+    border-color: color-mix(in srgb, var(--highlight-tier-max) 55%, white);
 }
 
 .color-switcher.is-active {
@@ -174,23 +174,23 @@ article {
 }
 
 .color-switcher.color-circle.is-active {
-    background: color-mix(in srgb, var(--highlight-circle) 78%, #fff);
-    border-color: var(--highlight-circle);
+    background: color-mix(in srgb, var(--highlight-tier-low) 78%, #fff);
+    border-color: var(--highlight-tier-low);
 }
 
 .color-switcher.color-single.is-active {
-    background: color-mix(in srgb, var(--highlight-single) 78%, #fff);
-    border-color: var(--highlight-single);
+    background: color-mix(in srgb, var(--highlight-tier-mid) 78%, #fff);
+    border-color: var(--highlight-tier-mid);
 }
 
 .color-switcher.color-double.is-active {
-    background: color-mix(in srgb, var(--highlight-double) 78%, #fff);
-    border-color: var(--highlight-double);
+    background: color-mix(in srgb, var(--highlight-tier-high) 78%, #fff);
+    border-color: var(--highlight-tier-high);
 }
 
 .color-switcher.color-wavy.is-active {
-    background: color-mix(in srgb, var(--highlight-wavy) 78%, #fff);
-    border-color: var(--highlight-wavy);
+    background: color-mix(in srgb, var(--highlight-tier-max) 78%, #fff);
+    border-color: var(--highlight-tier-max);
 }
 
 .legend-panel {
@@ -206,6 +206,12 @@ article {
     flex-direction: column;
     gap: clamp(0.9rem, 1.8vw, 1.2rem);
     width: clamp(210px, 24%, 240px);
+}
+
+.legend-inset {
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: clamp(0.6rem, 1.4vw, 1rem);
 }
 
 .paper article {
@@ -325,56 +331,45 @@ article {
     letter-spacing: 0.01em;
 }
 
-.legend-circle .legend-swatch {
-    background: var(--highlight-circle);
+.legend-range-low .legend-swatch {
+    background: var(--highlight-tier-low);
 }
 
-.legend-single .legend-swatch {
-    background: var(--highlight-single);
+.legend-range-mid .legend-swatch {
+    background: var(--highlight-tier-mid);
 }
 
-.legend-double .legend-swatch {
-    background: var(--highlight-double);
+.legend-range-high .legend-swatch {
+    background: var(--highlight-tier-high);
 }
 
-.legend-wavy .legend-swatch {
-    background: var(--highlight-wavy);
+.legend-range-max .legend-swatch {
+    background: var(--highlight-tier-max);
 }
 
-.highlight-circle {
-    background: color-mix(in srgb, var(--highlight-circle) 32%, transparent);
-    padding: 0 0.18em;
-    border-radius: 0.35em;
-    box-shadow:
-        0 0 10px color-mix(in srgb, var(--highlight-circle) 28%, transparent),
-        inset 0 -0.2em 0 color-mix(in srgb, var(--highlight-circle) 24%, transparent);
-}
-
-.highlight-single {
-    background: color-mix(in srgb, var(--highlight-single) 22%, transparent);
+.highlight-tier {
     padding: 0 0.16em;
-    border-radius: 0.3em;
+    border-radius: 0.32em;
     box-shadow:
-        0 0 10px color-mix(in srgb, var(--highlight-single) 26%, transparent),
-        inset 0 -0.18em 0 color-mix(in srgb, var(--highlight-single) 32%, transparent);
+        0 0 10px color-mix(in srgb, var(--highlight-tier-color) 26%, transparent),
+        inset 0 -0.18em 0 color-mix(in srgb, var(--highlight-tier-color) 30%, transparent);
+    background: color-mix(in srgb, var(--highlight-tier-color) 24%, transparent);
 }
 
-.highlight-double {
-    background: color-mix(in srgb, var(--highlight-double) 18%, transparent);
-    padding: 0 0.16em;
-    border-radius: 0.3em;
-    box-shadow:
-        0 0 10px color-mix(in srgb, var(--highlight-double) 24%, transparent),
-        inset 0 -0.18em 0 color-mix(in srgb, var(--highlight-double) 28%, transparent);
+.highlight-tier-low {
+    --highlight-tier-color: var(--highlight-tier-low);
 }
 
-.highlight-wavy {
-    background: color-mix(in srgb, var(--highlight-wavy) 20%, transparent);
-    padding: 0 0.16em;
-    border-radius: 0.3em;
-    box-shadow:
-        0 0 10px color-mix(in srgb, var(--highlight-wavy) 26%, transparent),
-        inset 0 -0.18em 0 color-mix(in srgb, var(--highlight-wavy) 30%, transparent);
+.highlight-tier-mid {
+    --highlight-tier-color: var(--highlight-tier-mid);
+}
+
+.highlight-tier-high {
+    --highlight-tier-color: var(--highlight-tier-high);
+}
+
+.highlight-tier-max {
+    --highlight-tier-color: var(--highlight-tier-max);
 }
 
 .highlight-preview {
@@ -397,6 +392,14 @@ article {
     font-size: 0.85rem;
     color: #fff;
     box-shadow: 0 0 12px rgba(220, 66, 66, 0.4);
+}
+
+.highlight-summary {
+    margin-top: clamp(0.4rem, 1vw, 0.7rem);
+    text-align: right;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2a44;
 }
 
 header h2 {
@@ -473,6 +476,12 @@ p {
         width: min(100%, 92vw);
         height: auto;
         max-height: 60vh;
+    }
+
+    .legend-inset {
+        align-self: center;
+        margin: 1.4rem auto 0;
+        width: min(320px, 88vw);
     }
 }
 .highlight-preview {

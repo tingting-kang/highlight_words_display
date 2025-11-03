@@ -61,10 +61,9 @@
             </nav>
         </div>
     </div>
-        <script src="mark_word_data.js"></script>
     <script>
-        (function () {
-            const wordData = Array.isArray(window.markWordData) ? window.markWordData : [];
+        (async function () {
+            const csvUrl = 'marking_statistics(1).csv';
             const maxScore = 20;
             const viewToType = {
                 circle: 'circle',
@@ -96,6 +95,73 @@
                 double: 'Double-underline count',
                 wavy: 'Wavy-underline count'
             };
+
+            const splitCsvLine = (line) => {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+
+                for (let i = 0; i < line.length; i += 1) {
+                    const char = line[i];
+
+                    if (char === '"') {
+                        if (inQuotes && line[i + 1] === '"') {
+                            current += '"';
+                            i += 1;
+                        } else {
+                            inQuotes = !inQuotes;
+                        }
+                    } else if (char === ',' && !inQuotes) {
+                        result.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+
+                result.push(current.trim());
+                return result;
+            };
+
+            const decodeField = (field) => field.replace(/^"(.*)"$/, '$1').trim();
+
+            const parseCsv = (text) => {
+                const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+                if (lines.length <= 1) {
+                    return [];
+                }
+
+                const dataRows = [];
+                for (let i = 1; i < lines.length; i += 1) {
+                    const fields = splitCsvLine(lines[i]).map(decodeField);
+                    if (fields.length < 6) {
+                        continue;
+                    }
+
+                    const [, word, circle, single, double, wavy] = fields;
+                    dataRows.push({
+                        word,
+                        circle: Number(circle) || 0,
+                        single: Number(single) || 0,
+                        double: Number(double) || 0,
+                        wavy: Number(wavy) || 0
+                    });
+                }
+
+                return dataRows;
+            };
+
+            let wordData = [];
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${csvUrl}: ${response.status} ${response.statusText}`);
+                }
+                const csvText = await response.text();
+                wordData = parseCsv(csvText);
+            } catch (error) {
+                console.error('Unable to load highlight data', error);
+            }
 
             const params = new URLSearchParams(window.location.search);
             const activeView = (params.get('color') || 'circle').toLowerCase();

@@ -417,6 +417,7 @@ header h3 {
     color: #1f2a44;
     letter-spacing: 0.04em;
     margin-top: 0.2rem;
+    white-space: nowrap;
 }
 
 header h4 {
@@ -426,6 +427,7 @@ header h4 {
     color: #415a77;
     letter-spacing: 0.03em;
     margin-top: 0.35rem;
+    white-space: nowrap;
 }
 
 p {

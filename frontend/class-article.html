@@ -182,8 +182,15 @@
             });
 
             const paragraphs = document.querySelectorAll('.paper article p');
+            const headers = document.querySelectorAll('.paper article header h3, .paper article header h4');
             const wordSpans = [];
 
+            // 处理标题中的单词
+            headers.forEach((header) => {
+                header.innerHTML = header.innerHTML.replace(/([A-Za-z]+(?:[-'][A-Za-z]+)*)/g, '<span class="word">$1</span>');
+            });
+
+            // 处理段落中的单词
             paragraphs.forEach((p) => {
                 p.innerHTML = p.innerHTML.replace(/([A-Za-z]+(?:[-'][A-Za-z]+)*)/g, '<span class="word">$1</span>');
             });
@@ -222,24 +229,33 @@
             });
 
             const queues = queuesByMode[markType] || {};
-            let scoreTotal = 0;
-            let processedWords = 0;
+            let markedWordsSet = new Set(); // 记录被标记的单词（不重复）
+            let totalWords = 0; // 文章总单词数
 
+            // 第一遍：计算总单词数和标记单词
             wordSpans.forEach((span) => {
                 allClasses.forEach((cls) => span.classList.remove(cls));
                 const key = normalize(span.textContent);
+                totalWords += 1; // 计算总单词数
+
                 const queue = queues[key];
                 if (!queue || !queue.length) {
                     return;
                 }
                 const score = queue.shift();
+                // 当数据为0时，不添加高亮效果
+                if (score === 0) {
+                    return;
+                }
+
+                // 标记这个单词被标记了（不管标记多少次）
+                markedWordsSet.add(key);
+
                 const ratio = Math.max(0, Math.min(1, score / maxScore));
                 const tierClass = getTierClass(ratio);
                 span.classList.add('highlight-tier', tierClass);
                 span.dataset[`${markType}Score`] = String(score);
                 span.setAttribute('title', `${scoreLabels[markType] || 'Count'}: ${score}`);
-                scoreTotal += score;
-                processedWords += 1;
             });
 
             const header = document.querySelector('.paper article header');
@@ -250,9 +266,13 @@
                 }
                 const summary = document.createElement('div');
                 summary.className = 'highlight-summary';
-                const maxTotal = Math.max(1, processedWords * maxScore);
-                const percent = (scoreTotal / maxTotal) * 100;
-                summary.textContent = `${labels[markType] || 'Highlights'}: ${scoreTotal} / ${maxTotal} (${percent.toFixed(1)}%)`;
+                // 分子：被标记的单词数
+                const markedCount = markedWordsSet.size;
+                // 分母：文章总单词数
+                const denominator = Math.max(1, totalWords);
+                // 百分比：标记单词数 / 总单词数 × 100
+                const percent = (markedCount / denominator) * 100;
+                summary.textContent = `${labels[markType] || 'Highlights'}: ${markedCount} / ${denominator} (${percent.toFixed(1)}%)`;
                 header.appendChild(summary);
             }
         })();

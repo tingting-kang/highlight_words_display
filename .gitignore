@@ -1,0 +1,337 @@
+# ========================================
+# highlight_words_display Project .gitignore
+# ========================================
+
+# Operating System Files
+# ========================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+
+# ========================================
+# IDE and Editors
+# ========================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+.vs/
+
+# JetBrains IDEs (IntelliJ, WebStorm, PyCharm, etc)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.vim
+.vim/
+Session.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Atom
+.atom/
+
+# ========================================
+# Development Dependencies and Package Managers
+# ========================================
+
+# Node.js
+node_modules/
+npm-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.npm/
+.eslintcache
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+.coverage
+.env
+.env.local
+
+# Ruby
+Gemfile.lock
+vendor/
+.bundle/
+
+# PHP
+vendor/
+.composer.lock
+composer-lock.json
+
+# Java
+target/
+.class
+*.jar
+*.war
+*.ear
+.gradle/
+
+# Go
+vendor/
+*.exe
+*.exe~
+
+# ========================================
+# Logs and Temporary Files
+# ========================================
+
+# Log files
+*.log
+logs/
+*.log.*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Cache directories
+.cache/
+cache/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.hypothesis/
+
+# ========================================
+# Build and Deployment
+# ========================================
+
+# Build artifacts
+dist/
+build/
+*.min.js
+*.min.css
+
+# Packages
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Backups
+backup/
+backups/
+*.backup
+*.bak
+
+# Server logs
+/var/log/
+*.access.log
+*.error.log
+deploy.log
+
+# ========================================
+# Sensitive Information and Configuration
+# ========================================
+
+# Environment configuration files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+
+# SSH keys and certificates
+*.pem
+*.key
+*.pub
+*.pfx
+*.p12
+id_rsa
+id_dsa
+id_ed25519
+
+# Database configuration and files
+*.sql
+database.yml
+database.json
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# AWS and cloud configuration
+.aws/
+.azure/
+.gcp/
+.google/
+
+# Docker sensitive configuration
+docker-compose.override.yml
+.dockerignore.local
+
+# Terminal/SSH configuration
+.ssh/
+known_hosts
+
+# Termius local configuration
+.termius/
+
+# ========================================
+# Operating System Generated Files
+# ========================================
+
+# System files
+.DS_Store
+.env.local.php
+.htaccess
+.htpasswd
+web.config
+
+# Temporary directories
+$RECYCLE.BIN/
+System\ Volume\ Information/
+
+# ========================================
+# Project Specific Files
+# ========================================
+
+# Local development configuration
+local/
+local.conf
+local_config.json
+local_settings.json
+
+# Test coverage reports
+coverage/
+.nyc_output/
+htmlcov/
+
+# Local development folders
+local_dev/
+my_workspace/
+
+# Personal notes
+personal_notes.txt
+*.private.md
+
+# ========================================
+# Frontend Project Specific
+# ========================================
+
+# Compiled map files
+*.css.map
+*.js.map
+
+# Frontend build files
+public/dist/
+public/build/
+
+# Frontend framework temporary files
+.next/
+.nuxt/
+out/
+.vuepress/dist/
+
+# ========================================
+# Editor Generated Temporary Files
+# ========================================
+
+.tern-port
+.env.example.local
+*.local.json
+
+# ========================================
+# Files That Must Be Committed (negation patterns)
+# ========================================
+
+# Frontend files must be committed
+!frontend/
+!frontend/class-article.html
+!frontend/styles/
+!frontend/styles/article.css
+!frontend/marking_statistics*.csv
+!frontend/highlight_stats.json
+!frontend/*.txt
+
+# Documentation and configuration must be committed
+!*.md
+!*.sh
+!.gitignore
+!.claude/
+
+# ========================================
+# Comments and Notes
+# ========================================
+#
+# This .gitignore file is for the highlight_words_display project.
+# This is a pure frontend project (HTML + CSS + JavaScript).
+#
+# Main coverage areas:
+# 1. Operating system files (macOS, Windows, Linux)
+# 2. IDE and editor temporary files
+# 3. Development dependencies (if extended in the future)
+# 4. Sensitive information (keys, passwords, API keys)
+# 5. Logs and cache files
+#
+# Files that should always be committed:
+# - frontend/ directory with source code
+# - *.md documentation files
+# - *.sh deployment scripts
+# - .gitignore itself
